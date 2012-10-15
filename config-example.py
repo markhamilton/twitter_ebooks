@@ -7,7 +7,14 @@ api = {
 }
 
 # List of accounts that learn.py should grab tweets from
-dump_accounts = []
+dump_accounts = ['']
+
+#text file to save tweets we've made in
+our_tweets = 'file.txt'
+#text file to save tweets found via learn.py in
+learned_tweets = 'another_file.txt'
+#big text file of tweets you used to prime the brain with
+brain_tweets = 'yet_another_file.txt'
 
 # Skip replies when learning?
 skip_replies = True
