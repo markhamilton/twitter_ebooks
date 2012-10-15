@@ -19,6 +19,12 @@ api = twitter.Api(**config.api)
 b.start_batch_learning()
 
 tweets = 0
+#create a file for learned tweets if it doesn't exist already
+if os.path.exists(config.learned_tweets) == False:
+		tweetlog = open(config.learned_tweets, "w")
+		tweetlog.close
+#reopen it for reading/writing
+learned = open(config.learned_tweets, "w")
 
 def smart_truncate(content, length=140):
 	    if len(content) <= length:
@@ -48,6 +54,8 @@ for account in config.dump_accounts:
 
 	for tweet in timeline:
 		b.learn(tweet.text)
+		#add it to the learned txt file
+		learned.write(tweet.text + '\n')
 		last_tweet = max(tweet.id, last_tweet)
 		tweets += 1
 
@@ -56,5 +64,6 @@ for account in config.dump_accounts:
 
 print "Learning %d tweets" % tweets
 b.stop_batch_learning()
-
+#close the learned txt file
+learned.close()
 open(os.path.join(os.path.dirname(__file__), '.state'), 'w').write(dumps(state))
