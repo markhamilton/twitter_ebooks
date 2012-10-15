@@ -8,3 +8,5 @@ in crontab. the file you need to delete is the one you listed for 'our_tweets' i
 
 You set it up basically the same way as before. 
 The only difference is that there's now a few more things in config.py to set up.
+
+Also note that it doesn't do all the checks and junk for replies yet.
