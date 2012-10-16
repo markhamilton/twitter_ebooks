@@ -12,34 +12,32 @@ args = parser.parse_args()
 
 api = twitter.Api(**config.api)
 
+def openfile(path):
+	#note: i don't actually know if you have to close + reopen a file to change the mode soooo
+	if os.path.exists(path) == False:
+		txtfile = open(path, "w")
+		txtfile.close
+	#open for read and write
+	txtfile = open(path, "r+")
+	return txtfile
+
 if args.tweet:
 	api.PostUpdate(args.tweet)
 else:
-	#note: i don't actually know if you have to close + reopen a file to change the mode soooo
-	#create a tweet log if we don't have one already
-	if os.path.exists(config.our_tweets) == False:
-		tweetlog = open(config.our_tweets, "w")
-		tweetlog.close
-	#open for read and write
-	tweetlog = open(config.our_tweets, "r+")
+	
+	#open our twert log
+	tweetlog = openfile(config.our_tweets)
 	#put our tweetlog into a list
 	twets = [twet.strip() for twet in tweetlog]	
 	
 	#text file with tweets used to prime the brain (should already exist but let's make sure anyway I guess)
-	if os.path.exists(config.brain_tweets) == False:
-		primedtxt = open(config.brain_tweets, "w")
-		primedtxt.close
-	#we only need to read from it so mode is "r"
-	primedtxt = open(config.brain_tweets, "r")
+	primedtxt = openfile(config.brain_tweets)
 	#shove those pieces of shit into a list
 	brains = [line.strip() for line in primedtxt]
 
-	#learned tweets
-	if os.path.exists(config.learned_tweets) == False:
-		learnedtxt = open(config.learned_tweets, "w")
-		learnedtxt.close
-	#we only need to read from it so mode is "r"
-	learnedtxt = open(config.learned_tweets, "r")
+	
+	#open up our learned tweets
+	learnedtxt = openfile(config.learned_tweets)
 	#shove these other pieces of shit into a list
 	learned = [line.strip() for line in learnedtxt]	
 
@@ -65,6 +63,7 @@ else:
 		return True
 
 	# get a reply from brain, encode as UTF-8
+	
 	i = 0
 	while True:
 		tweet = smart_truncate(b.reply("").encode('utf-8', 'replace'))
@@ -76,7 +75,6 @@ else:
 		
 	#put the tweet in the log
 	tweetlog.write(tweet + '\n')
-	
 	#close all those files lol
 	tweetlog.close()
 	learnedtxt.close()
