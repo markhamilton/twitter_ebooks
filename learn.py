@@ -23,8 +23,8 @@ tweets = 0
 if os.path.exists(config.learned_tweets) == False:
 		tweetlog = open(config.learned_tweets, "w")
 		tweetlog.close
-#reopen it for reading/writing
-learned = open(config.learned_tweets, "r+")
+#reopen it
+learned = open(config.learned_tweets, "a")
 
 def smart_truncate(content, length=140):
 	    if len(content) <= length:
