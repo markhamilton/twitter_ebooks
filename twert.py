@@ -65,15 +65,18 @@ else:
 		return True
 
 	# get a reply from brain, encode as UTF-8
-	
+	i = 0
 	while True:
-		tweet = b.reply("").encode('utf-8', 'replace')
-		if check_tweet(tweet):
+		tweet = smart_truncate(b.reply("").encode('utf-8', 'replace'))
+		#make sure we're not tweeting something close to something else in the txt files
+		#or we can just give up after 100 tries
+		if check_tweet(tweet) or i >= 100:
 			break
+		i += 1
 		
-	tweet = smart_truncate(tweet)
 	#put the tweet in the log
 	tweetlog.write(tweet + '\n')
+	
 	#close all those files lol
 	tweetlog.close()
 	learnedtxt.close()
