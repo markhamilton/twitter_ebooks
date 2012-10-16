@@ -21,6 +21,12 @@ if 'last_reply' not in state:
 
 api = twitter.Api(**config.api)
 
+def check_names(rp):
+	for name in config.screen_name:		
+		if rp.user.screen_name.lower() == name.lower():
+			return True
+	return False
+
 if config.replies:
 	print "Performing replies"
 	
@@ -29,10 +35,11 @@ if config.replies:
 	replies = api.GetReplies(since_id=last_tweet)
 
 	for reply in replies:
-		if reply.user.screen_name.lower() == config.screen_name.lower():
+		if check_names(reply):
 			continue
 		try:
-			api.PostUpdate(smart_truncate('@%s %s' % (reply.user.screen_name, b.reply(reply.text).encode('utf-8', 'replace'))), in_reply_to_status_id=reply.id)
+			reply_tweet = smart_truncate('@%s %s' % (reply.user.screen_name.encode('utf-8', 'replace'), b.reply(reply.text.encode('utf-8', 'replace')).encode('utf-8', 'replace')))
+			api.PostUpdate(reply_tweet, in_reply_to_status_id=reply.id)
 		except:
 			print 'Error posting reply.'
 		last_tweet = max(reply.id, last_tweet)
