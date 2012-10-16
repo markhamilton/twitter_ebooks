@@ -25,5 +25,5 @@ skip_retweets = True
 # Reply to tweets?
 replies = True
 
-# Bot screen name
-screen_name = ''
+# list of screen names to ignore when replying, be sure to include your bot's own screen name!
+screen_name = ['bots_screen_name', 'other_account_to_ignore']
