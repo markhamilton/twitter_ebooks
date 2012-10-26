@@ -2,6 +2,7 @@ import twitter, os
 import config
 from simplejson import loads, dumps
 from cobe.brain import Brain
+import db_manager
 
 b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
@@ -19,12 +20,7 @@ api = twitter.Api(**config.api)
 b.start_batch_learning()
 
 tweets = 0
-#create a file for learned tweets if it doesn't exist already
-if os.path.exists(config.learned_tweets) == False:
-		tweetlog = open(config.learned_tweets, "w")
-		tweetlog.close
-#reopen it
-learned = open(config.learned_tweets, "a")
+
 
 def smart_truncate(content, length=140):
 	    if len(content) <= length:
@@ -54,8 +50,8 @@ for account in config.dump_accounts:
 
 	for tweet in timeline:
 		b.learn(tweet.text)
-		#add it to the learned txt file
-		learned.write(tweet.text.encode('utf-8', 'replace') + '\n')
+		#add it to the db
+		db_manager.insert_tweet(tweet.text.encode('utf-8', 'replace'), False)
 		last_tweet = max(tweet.id, last_tweet)
 		tweets += 1
 
@@ -64,6 +60,5 @@ for account in config.dump_accounts:
 
 print "Learning %d tweets" % tweets
 b.stop_batch_learning()
-#close the learned txt file
-learned.close()
+#close the learned txt
 open(os.path.join(os.path.dirname(__file__), '.state'), 'w').write(dumps(state))

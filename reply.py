@@ -1,7 +1,6 @@
 import twitter, os
 import config
-import Levenshtein
-import re
+import db_manager
 from simplejson import loads, dumps
 from cobe.brain import Brain
 
@@ -13,14 +12,7 @@ def smart_truncate(content, length=140):
 
 b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
-def openfile(path):
-	#note: i don't actually know if you have to close + reopen a file to change the mode soooo
-	if os.path.exists(path) == False:
-		txtfile = open(path, "w")
-		txtfile.close
-	#open for read and write
-	txtfile = open(path, "r+")
-	return txtfile
+
 try:
 	state = loads(open(os.path.join(os.path.dirname(__file__), '.state'), 'r').read())
 except:
@@ -39,25 +31,8 @@ def check_names(rp):
 
 if config.replies:
 	print "Performing replies"
-	#open for read and write
-	tweetlog = openfile(config.our_tweets)
-	#put our tweetlog into a list
-	twets = [twet.strip() for twet in tweetlog]	
 	
-	#text file with tweets used to prime the brain (should already exist but let's make sure anyway I guess)
-	
-	primedtxt = openfile(config.brain_tweets)
-	#shove those pieces of shit into a list
-	brains = [line.strip() for line in primedtxt]
-
-	
-	#we only need to read from it so mode is "r"
-	learnedtxt = openfile(config.learned_tweets)
-	#shove these other pieces of shit into a list
-	learned = [line.strip() for line in learnedtxt]	
-
-	#combine the lists
-	lines = brains + twets + learned
+	lines = db_manager.get_tweets()
 	last_tweet = long(state['last_reply'])
 
 	def check_tweet(content):
@@ -67,7 +42,7 @@ if config.replies:
 		return True
 	
 	replies = api.GetReplies(since_id=last_tweet)
-
+	
 	for reply in replies:
 		if check_names(reply):
 			continue
@@ -83,11 +58,9 @@ if config.replies:
 		except:
 			print 'Error posting reply.'
 		last_tweet = max(reply.id, last_tweet)
-		
+
 	state['last_reply'] = str(last_tweet)
 
 print "Saving state"
-tweetlog.close()
-learnedtxt.close()
-primedtxt.close()
+
 open(os.path.join(os.path.dirname(__file__), '.state'), 'w').write(dumps(state))

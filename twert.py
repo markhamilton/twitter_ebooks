@@ -2,6 +2,7 @@ import twitter, argparse, sys, os
 import config
 import Levenshtein
 import re
+import db_manager
 from cobe.brain import Brain
 
 parser = argparse.ArgumentParser(description="Post ebooks tweets to twitter.")
@@ -11,6 +12,7 @@ parser.add_argument('-t', '--tweet', help="Tweet arbitrary text instead of using
 args = parser.parse_args()
 
 api = twitter.Api(**config.api)
+
 
 def openfile(path):
 	#note: i don't actually know if you have to close + reopen a file to change the mode soooo
@@ -24,30 +26,11 @@ def openfile(path):
 if args.tweet:
 	api.PostUpdate(args.tweet)
 else:
-	
-	#open our twert log
-	tweetlog = openfile(config.our_tweets)
-	#put our tweetlog into a list
-	twets = [twet.strip() for twet in tweetlog]	
-	
-	#text file with tweets used to prime the brain (should already exist but let's make sure anyway I guess)
-	primedtxt = openfile(config.brain_tweets)
-	#shove those pieces of shit into a list
-	brains = [line.strip() for line in primedtxt]
 
-	
-	#open up our learned tweets
-	learnedtxt = openfile(config.learned_tweets)
-	#shove these other pieces of shit into a list
-	learned = [line.strip() for line in learnedtxt]	
-
-	#combine the lists
-	lines = brains + twets + learned
-	
+	#get all our tweets
+	lines = db_manager.get_tweets()
 	b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 	
-	
-
 	#truncate to 140 characters, do not cut off words
 	def smart_truncate(content, length=140):
 	    if len(content) <= length:
@@ -63,7 +46,6 @@ else:
 		return True
 
 	# get a reply from brain, encode as UTF-8
-	
 	i = 0
 	while True:
 		tweet = smart_truncate(b.reply("").encode('utf-8', 'replace'))
@@ -73,12 +55,8 @@ else:
 			break
 		i += 1
 		
-	#put the tweet in the log
-	tweetlog.write(tweet + '\n')
-	#close all those files lol
-	tweetlog.close()
-	learnedtxt.close()
-	primedtxt.close()
+	#put the tweet in the db
+	db_manager.insert_tweet(tweet)
 	if args.stdout:
 		print tweet
 	else:
