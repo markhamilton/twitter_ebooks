@@ -10,7 +10,9 @@ List of changes:
 the bot has to work with, for example thom ebooks could probably go for like a dang year without needing to repeat.
 
 Anyay to clear the log you can use crontab i.e.:
+
 0 0 */2 * * rm /path/to/tweetlog.txt > /dev/null 
+
 will clear the log every other day. The file you need to clear is the one you put for 'our_tweets' in config.py. How often you'll actually need to clear the log is very specific to your individual bot so just play it by ear~!
 
 You set it up basically the same way as before. 
