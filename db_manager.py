@@ -14,7 +14,7 @@ def get_tweets():
 		#get all the tweets!
 		for t in cur.execute('SELECT * FROM tweets'):
 			if t[2] == False or datetime.datetime.now() - t[1] > datetime.timedelta(hours = config.log_time):
-				tweets_from_db.append(str(t.content))
+				tweets_from_db.append(str(t[0]))
 		#list to hold tweets from txt files
 		txt_tweets = []
 		#open the file used to prime the brain
