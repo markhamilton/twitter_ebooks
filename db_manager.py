@@ -13,7 +13,7 @@ def get_tweets():
 		cur.execute("CREATE TABLE IF NOT EXISTS tweets(content TEXT, date TIMESTAMP, ours BOOLEAN)")
 		#get all the tweets!
 		for t in cur.execute('SELECT * FROM tweets'):
-			if t.ours == False or datetime.datetime.now() - t.date > datetime.timedelta(hours = config.log_time):
+			if t[2] == False or datetime.datetime.now() - t[1] > datetime.timedelta(hours = config.log_time):
 				tweets_from_db.append(str(t.content))
 		#list to hold tweets from txt files
 		txt_tweets = []
@@ -30,7 +30,7 @@ def insert_tweet(content, ours=True):
 		#create the table if it doesn't exist
 		cur.execute("CREATE TABLE IF NOT EXISTS tweets(content TEXT, date TIMESTAMP, ours BOOLEAN)")
 		#prepare and insert the tweet
-		t = [str(content).encode('utf-8', 'replace'), datetime.datetime.now(), ours]
+		t = [content.encode('utf-8', 'replace'), datetime.datetime.now(), ours]
 		cur.execute("INSERT INTO tweets VALUES (?,?, ?)", t)
 
 		
