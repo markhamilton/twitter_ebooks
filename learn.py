@@ -55,7 +55,7 @@ for account in config.dump_accounts:
 	for tweet in timeline:
 		b.learn(tweet.text)
 		#add it to the learned txt file
-		learned.write(tweet.text + '\n')
+		learned.write(tweet.text.encode('utf-8', 'replace') + '\n')
 		last_tweet = max(tweet.id, last_tweet)
 		tweets += 1
 
