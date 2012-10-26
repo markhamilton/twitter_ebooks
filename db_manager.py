@@ -3,7 +3,8 @@ import sys, os
 import datetime
 import sqlite3
 
-db = sqlite3.connect('twets.db', detect_types=sqlite3.PARSE_DECLTYPES)
+db = sqlite3.connect('twets.db', detect_types=sqlite3.PARSE_DECLTYPES) 
+db.text_factory = str
 
 def get_tweets():
 	with db:
@@ -30,13 +31,15 @@ def insert_tweet(content, ours=True):
 		#create the table if it doesn't exist
 		cur.execute("CREATE TABLE IF NOT EXISTS tweets(content TEXT, date TIMESTAMP, ours BOOLEAN)")
 		#prepare and insert the tweet
-		t = [content.encode('utf-8', 'replace'), datetime.datetime.now(), ours]
+		t = [content, datetime.datetime.now(), ours]
 		cur.execute("INSERT INTO tweets VALUES (?,?, ?)", t)
 
 		
 
 def openfile(path):
 	#note: i don't actually know if you have to close + reopen a file to change the mode soooo
+	if(len(config.brain_tweets[0]) == 0):
+		return ['']
 	if os.path.exists(os.path.join(os.path.dirname(__file__), path)) == False:
 		txtfile = open(os.path.join(os.path.dirname(__file__), path), "w")
 		txtfile.close
