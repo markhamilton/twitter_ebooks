@@ -6,13 +6,12 @@ List of changes:
 
 -Bot won't tweet verbatim from its source material (text file used to prime the brain and auto-learned tweets)
 
--Bot keeps track of what it's tweeted and won't repeat itself. It will eventually run out of things to tweet so you should probably clear its log everyday.
-(I do this by putting: 
-0 0 * * * rm /path/to/tweetlog.txt > /dev/null 
-in crontab. the file you need to delete is the one you listed for 'our_tweets' in config.py)
+-Bot keeps track of what it's tweeted and won't repeat itself. It will eventually run out of things to tweet so you should probably clear its log every few day depending on how much material
+the bot has to work with, for example thom ebooks could probably go for like a dang year without needing to repeat.
 
+Anyay to clear the log you can use crontab i.e.:
+0 0 */2 * * rm /path/to/tweetlog.txt > /dev/null 
+will clear the log every other day. The file you need to clear is the one you put for 'our_tweets' in config.py. How often you'll actually need to clear the log is very specific to your individual bot so just play it by ear~!
 
 You set it up basically the same way as before. 
 The only difference is that there's now a few more things in config.py to set up.
-
-Also note that it doesn't do all the new checks and junk for replies yet.
