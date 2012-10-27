@@ -2,11 +2,11 @@ This is an update to https://github.com/postcasio/twitter_ebooks (Setup instruct
 
 A single (non-standard) dependency has been added: http://pypi.python.org/pypi/python-Levenshtein/
 
-I believe everything else come standard with python
+I believe everything else comes standard with python
 
 The functionality of the bot has been extensively upgraded at this point, some highlights:
 
-* bot keeps track of what it's tweeted and doesn't repeat a specific tweet until a user defined amount of time have passed
+* bot keeps track of what it's tweeted and doesn't repeat a specific tweet until a user defined amount of time has passed
 * bot won't copy tweets verbatim from a list of definable text files, such as the file you used to prime it or old log files from previous versions
 * bot won't copy tweets verbatim that it learns on the fly via learn.py
 * it now uses an SQLite database to keep track of tweets its made and learned along with timestamps
