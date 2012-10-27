@@ -1,6 +1,6 @@
 This is an update to https://github.com/postcasio/twitter_ebooks (Setup instructions are essentially the same as detailed in that project's readme)
 
-A single dependency has been added: http://pypi.python.org/pypi/python-Levenshtein/
+A single (non-standard) dependency has been added: http://pypi.python.org/pypi/python-Levenshtein/
 
 I believe everything else come standard with python
 
