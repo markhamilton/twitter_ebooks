@@ -1,6 +1,8 @@
 import twitter, os
 import config
 import db_manager
+import Levenshtein
+import re
 from simplejson import loads, dumps
 from cobe.brain import Brain
 
