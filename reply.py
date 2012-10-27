@@ -53,6 +53,7 @@ if config.replies:
 				if check_tweet(reply_tweet) or i >= 100:
 						break
 					i += 1
+			db_manager.insert_tweet(reply_tweet)
 			reply_tweet = smart_truncate('@%s %s' % (reply.user.screen_name.encode('utf-8', 'replace'), reply_tweet))
 			api.PostUpdate(reply_tweet, in_reply_to_status_id=reply.id)
 		except:
