@@ -13,16 +13,6 @@ args = parser.parse_args()
 
 api = twitter.Api(**config.api)
 
-
-def openfile(path):
-	#note: i don't actually know if you have to close + reopen a file to change the mode soooo
-	if os.path.exists(path) == False:
-		txtfile = open(path, "w")
-		txtfile.close
-	#open for read and write
-	txtfile = open(path, "r+")
-	return txtfile
-
 if args.tweet:
 	api.PostUpdate(args.tweet)
 else:
