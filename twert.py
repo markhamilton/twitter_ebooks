@@ -28,10 +28,10 @@ else:
 	    else:
 	        return content[:length].rsplit(' ', 1)[0]
 
-	#check tweet vs text files and reject if >60% the same as a tweet up in there
+	#check tweet vs text files and reject if >70% the same as a tweet up in there
 	def check_tweet(content):
 		for line in lines:
-			if Levenshtein.ratio(re.sub(r'\W+', '', content), re.sub(r'\W+', '', line)) >= 0.60:
+			if Levenshtein.ratio(re.sub(r'\W+', '', content), re.sub(r'\W+', '', line)) >= 0.70:
 				return False
 		return True
 
