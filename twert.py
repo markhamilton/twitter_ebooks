@@ -16,7 +16,7 @@ api = twitter.Api(**config.api)
 if args.tweet:
 	api.PostUpdate(args.tweet)
 else:
-
+	blacklist = config.blacklist
 	#get all our tweets
 	lines = db_manager.get_tweets()
 	b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
@@ -28,8 +28,11 @@ else:
 	    else:
 	        return content[:length].rsplit(' ', 1)[0]
 
-	#check tweet vs text files and reject if >70% the same as a tweet up in there
+	#check tweet vs text files and reject if >70% the same as a tweet up in there or if it contains a blacklisted word
 	def check_tweet(content):
+		for k in blacklist:
+			if k in content:
+				return False
 		for line in lines:
 			if Levenshtein.ratio(re.sub(r'\W+', '', content), re.sub(r'\W+', '', line)) >= 0.70:
 				return False
