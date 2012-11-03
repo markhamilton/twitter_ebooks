@@ -34,5 +34,6 @@ replies = True
 screen_name = ['']
 
 #blacklist of words or phrases to reject tweets based on
-#example: ['bad word', 'worse word']
+#be sure to include spaces!! for example "is" will give a false positive and match "this", but " is " (note the spaces) won't.
+#example: [' badword ', ' butt ']
 blacklist = ['']
