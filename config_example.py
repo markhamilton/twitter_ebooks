@@ -32,3 +32,7 @@ replies = True
 # list of screen names to ignore when replying, be sure to include your bot's screen name!
 #example: ['thom_ebooks', 'clonepa_']
 screen_name = ['']
+
+#blacklist of words or phrases to reject tweets based on
+#example: ['bad word', 'worse word']
+blacklist = ['']
