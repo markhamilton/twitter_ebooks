@@ -1,9 +1,9 @@
 This is an update to https://github.com/clonepa/twitter_ebooks, which is an update to postcasio's version, which is an update to thom's version.
 
 3 non-standard twitter dependencies:
-Levenshtein - http://pypi.python.org/pypi/python-Levenshtein/
-Cobe - https://github.com/pteichman/cobe
-Python-Twitter - https://github.com/postcasio/python-twitter/tarball/master
+- Levenshtein - http://pypi.python.org/pypi/python-Levenshtein/
+- Cobe - https://github.com/pteichman/cobe
+- Python-Twitter - https://github.com/postcasio/python-twitter/tarball/master
 
 (There are two common twitter api modules, make sure you grab the right one if you're using a package manager.)
 
@@ -26,7 +26,7 @@ Here's how to set it up (instructions modified from Thom, et. al):
 - Go to greptweet.com and fetch the tweets of your desired user(s)
 - Save as .txt file in your ebooks folder
 - ch to the ebooks folder and run:
-  python process.py tweetfile.txt
+  - python process.py tweetfile.txt
 - This removes the timestamps, direct replies, retweets, blank lines, and fixes some HTML entities that greptweets leaves in.
 
 ~~ CREATE APP
@@ -45,9 +45,9 @@ Here's how to set it up (instructions modified from Thom, et. al):
 
 (This will assume that you have installed python-distribute through your package manager.)
 - Execute these commands (with superuser privileges): 
-easy_install cobe 
-easy_install python-Levenshtein
-easy_install https://github.com/postcasio/python-twitter/tarball/master
+  - easy_install cobe 
+  - easy_install python-Levenshtein
+  - easy_install https://github.com/postcasio/python-twitter/tarball/master
 - (If you're on ubuntu, use apt-get install for these packages. If easy_install gives you trouble use pip install.)
 - Now download twitter_ebooks https://github.com/markhamilton/twitter_ebooks/tarball/master 
 - Untar this into your ebooks folder
@@ -61,26 +61,33 @@ easy_install https://github.com/postcasio/python-twitter/tarball/master
 !! DO THIS IN ORDER
 
 cobe init (this creates an empty cobe brain in the current directory) 
+
 python learn.py (This is only necessary if you enabled auto-learning. This sets the initial "last tweet learned" so you do not feed the bot a tweet twice. on arch this must be python2 learn.py) 
+
 rm cobe.brain cobe.brain-journal (this deletes the brain. we're going to create a new one using the file you prepared earlier) 
+
 cobe learn tweetfile.txt (this creates a new brain, using the file you prepared earlier as training) 
 
 Your bot is now ready! test it locally (this won't tweet anything) with:
+
 python twert.py -o 
 
 When this is to your liking, you can do a final 'live' test by doing:
+
 python twert.py 
 
 ~~ AUTOMATE YOUR ROBOT
 
 Chuck this into your crontab:
 
-0 * * * * python ~/twitter_ebooks/twert.py > /dev/null 
+0 * * * * python ~/twitter_ebooks/twert.py > /dev/null
+
 0,30 * * * * python ~/twitter_ebooks/twitter_ebooks/reply.py > /dev/null 
+
 0 0 * * * python ~/twitter_ebooks/learn.py > /dev/null 
 
 REMEMBER THAT THE DIRECTORIES GIVEN ARE EXAMPLES AND THAT YOU NEED TO CHANGE THEM TO REFLECT WHERE THE SCRIPT AND BRAIN ACTUALLY ARE
-If you use Arch Linux, use python2 instead of python 
+If you use Arch Linux, use python2 instead of python.
 
 These directives will make the bot tweet once an hour, reply to tweets twice an hour, and learn new tweets once a day at midnight. Look up how cron works if you want to change this.
 
