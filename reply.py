@@ -1,19 +1,11 @@
-import twitter, os
+import twitter, argparse, os
+import twert_helper
 import config
-import db_manager
-import Levenshtein
-import re
 from simplejson import loads, dumps
-from cobe.brain import Brain
 
-def smart_truncate(content, length=140):
-	    if len(content) <= length:
-	        return content
-	    else:
-	        return content[:length].rsplit(' ', 1)[0]
-
-b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
-
+parser = argparse.ArgumentParser(description="Checks for recent unanswered @mentions and replies to them individually")
+parser.add_argument('-o', '--stdout', action='store_true', help="Shows replies without actually sending to twitter")
+args = parser.parse_args()
 
 try:
 	state = loads(open(os.path.join(os.path.dirname(__file__), '.state'), 'r').read())
@@ -32,38 +24,31 @@ def check_names(rp):
 	return False
 
 if config.replies:
-	print "Performing replies"
+	if not args.stdout:
+		print "Performing replies"
+	else:
+		print "Printing test replies (dry-run)"
 	
-	lines = db_manager.get_tweets()
 	last_tweet = long(state['last_reply'])
-
-	def check_tweet(content):
-		for line in lines:
-			if Levenshtein.ratio(re.sub(r'\W+', '', content), re.sub(r'\W+', '', line)) >= 0.70:
-				return False
-		return True
-	
 	replies = api.GetReplies(since_id=last_tweet)
 	
 	for reply in replies:
 		if check_names(reply):
 			continue
-		try:
-			i = 0
-			while True:
-				reply_tweet = smart_truncate(b.reply(reply.text.encode('utf-8', 'replace')).encode('utf-8', 'replace'))
-				if check_tweet(reply_tweet) or i >= 100:
-					break
-				i += 1
-			db_manager.insert_tweet(reply_tweet)
-			reply_tweet = smart_truncate('@%s %s' % (reply.user.screen_name.encode('utf-8', 'replace'), reply_tweet))
+		# try:
+		reply_tweet = twert_helper.create_tweet(reply.text.encode('utf-8', 'replace')).encode('utf-8', 'replace')
+		reply_tweet = twert_helper.smart_truncate('@%s %s' % (reply.user.screen_name.encode('utf-8', 'replace'), reply_tweet))
+		if not args.stdout:
 			api.PostUpdate(reply_tweet, in_reply_to_status_id=reply.id)
-		except:
-			print 'Error posting reply.'
+		else: 
+			print(reply_tweet)
+		# except:
+		# 	print 'Error posting reply.'
+
 		last_tweet = max(reply.id, last_tweet)
 
-	state['last_reply'] = str(last_tweet)
-
-print "Saving state"
+	if not args.stdout:
+		state['last_reply'] = str(last_tweet)
+		print "Saving state"
 
 open(os.path.join(os.path.dirname(__file__), '.state'), 'w').write(dumps(state))
