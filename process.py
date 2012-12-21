@@ -1,3 +1,4 @@
+import codecs
 import argparse
 import re
 
@@ -5,7 +6,7 @@ parser = argparse.ArgumentParser(description="Prep a file directly from greptwee
 parser.add_argument('file', metavar='file', type=str, help='A file filled with raw tweet data')
 args = parser.parse_args()
 
-contents = open(args.file, "r").read()
+contents = codecs.open(args.file, "r", encoding="utf-8").read()
 
 # remove timestamps
 contents = re.sub(r'^.*\|.*\|', '', contents, flags=re.MULTILINE)
@@ -26,5 +27,5 @@ contents = contents.replace('&lt;', '<')
 contents = contents.replace('&amp;', '&')
 
 # write it all back to the same file.
-open(args.file, "w").write(contents)
+codecs.open(args.file, "w", encoding="utf-8").write(contents)
 print( 'Processed {} ({} chars)'.format(args.file, len(contents) ) )

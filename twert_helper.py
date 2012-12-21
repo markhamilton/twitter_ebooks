@@ -2,8 +2,8 @@ import Levenshtein
 import os
 import re
 import db_manager
-import config
 from cobe.brain import Brain
+import config
 
 #load blacklist
 blacklist = config.blacklist
@@ -48,7 +48,7 @@ def create_tweet(catalyst=''):
 	i = 0
 
 	while True:
-		tweet = b.reply(catalyst).encode('utf-8', 'replace')
+		tweet = b.reply(catalyst)
 		if(config.filter_url):
 			tweet = remove_url(tweet)
 		tweet = smart_truncate(tweet)

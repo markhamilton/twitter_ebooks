@@ -1,9 +1,16 @@
-import config
-import sys, os
+import imp
+import sys, os, codecs
 import datetime
 import sqlite3
 
-db = sqlite3.connect('twets.db', detect_types=sqlite3.PARSE_DECLTYPES) 
+db = None
+try:
+    import config
+    db = sqlite3.connect('twets.db', detect_types=sqlite3.PARSE_DECLTYPES) 
+except ImportError:
+    import config_example as config
+    db = sqlite3.connect(':memory:', detect_types=sqlite3.PARSE_DECLTYPES) 
+
 db.text_factory = str
 
 def get_tweets():
@@ -34,15 +41,13 @@ def insert_tweet(content, ours=True):
 		t = [content, datetime.datetime.now(), ours]
 		cur.execute("INSERT INTO tweets VALUES (?,?, ?)", t)
 
-		
-
 def openfile(path):
 	#note: i don't actually know if you have to close + reopen a file to change the mode soooo
 	if(len(config.brain_tweets[0]) == 0):
 		return ['']
 	if os.path.exists(os.path.join(os.path.dirname(__file__), path)) == False:
-		txtfile = open(os.path.join(os.path.dirname(__file__), path), "w")
-		txtfile.close
+		txtfile = codecs.open(os.path.join(os.path.dirname(__file__), path), "w", encoding="utf-8")
+		txtfile.close()
 	#open for read and write
-	txtfile = open(os.path.join(os.path.dirname(__file__), path), "r+")
+	txtfile = codecs.open(os.path.join(os.path.dirname(__file__), path), "r+", encoding="utf-8")
 	return txtfile

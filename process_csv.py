@@ -23,5 +23,5 @@ for filename in glob.glob('*.csv'):
                 ignored += 1
 
 # we have all the tweets now! throw em in a file, one per line
-open('../tweets.txt', 'w').write('\n'.join(tweets))
+codecs.open('../tweets.txt', 'w', encoding="utf-8").write('\n'.join(tweets))
 print "Processed %d tweets (ignored %d)" % (len(tweets), ignored)

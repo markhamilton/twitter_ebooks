@@ -1,13 +1,14 @@
 import twitter, os
-import config
+import codecs
 from simplejson import loads, dumps
 from cobe.brain import Brain
 import db_manager
+import config
 
 b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
 try:
-	state = loads(open(os.path.join(os.path.dirname(__file__), '.state'), 'r').read())
+	state = loads(codecs.open(os.path.join(os.path.dirname(__file__), '.state'), 'r', encoding="utf-8").read())
 except:
 	state = {}
 
@@ -51,7 +52,7 @@ for account in config.dump_accounts:
 	for tweet in timeline:
 		b.learn(tweet.text)
 		#add it to the db
-		db_manager.insert_tweet(tweet.text.encode('utf-8', 'replace'), False)
+		db_manager.insert_tweet(tweet.text, False)
 		last_tweet = max(tweet.id, last_tweet)
 		tweets += 1
 

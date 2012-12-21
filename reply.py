@@ -1,4 +1,4 @@
-import twitter, argparse, os
+import twitter, argparse, os, codecs
 import twert_helper
 import config
 from simplejson import loads, dumps
@@ -8,7 +8,7 @@ parser.add_argument('-o', '--stdout', action='store_true', help="Shows replies w
 args = parser.parse_args()
 
 try:
-	state = loads(open(os.path.join(os.path.dirname(__file__), '.state'), 'r').read())
+	state = loads(codecs.open(os.path.join(os.path.dirname(__file__), '.state'), 'r', encoding="utf-8").read())
 except:
 	state = {}
 
@@ -36,8 +36,8 @@ if config.replies:
 		if check_names(reply):
 			continue
 		# try:
-		reply_tweet = twert_helper.create_tweet(reply.text.encode('utf-8', 'replace')).encode('utf-8', 'replace')
-		reply_tweet = twert_helper.smart_truncate('@%s %s' % (reply.user.screen_name.encode('utf-8', 'replace'), reply_tweet))
+		reply_tweet = twert_helper.create_tweet(reply.text)
+		reply_tweet = twert_helper.smart_truncate('@%s %s' % (reply.user.screen_name, reply_tweet))
 		if not args.stdout:
 			api.PostUpdate(reply_tweet, in_reply_to_status_id=reply.id)
 		else: 
