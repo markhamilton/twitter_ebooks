@@ -6,7 +6,7 @@ ignored = 0
 # move to the json directory
 os.chdir('tweets')
 
-# for each csv file
+# for each json file
 for filename in glob.glob('*.js'):
 
     # open the file and parse it as json
