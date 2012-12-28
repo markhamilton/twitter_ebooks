@@ -1,4 +1,4 @@
-import re, os, glob, csv
+import os, glob, csv
 
 tweets = []
 ignored = 0
