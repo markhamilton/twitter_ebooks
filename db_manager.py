@@ -3,7 +3,7 @@ import sys, os
 import datetime
 import sqlite3
 
-db = sqlite3.connect('twets.db', detect_types=sqlite3.PARSE_DECLTYPES) 
+db = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'twets.db'), detect_types=sqlite3.PARSE_DECLTYPES) 
 db.text_factory = str
 
 def get_tweets():
