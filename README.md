@@ -49,7 +49,7 @@ Here's how to set it up (instructions modified from Thom, et. al):
 - Execute these commands (with superuser privileges): 
   - `easy_install cobe`
   - `easy_install python-Levenshtein`
-  - `easy_install https://github.com/postcasio/python-twitter/tarball/master`
+  - `easy_install https://github.com/bear/python-twitter/archive/api_v1.1.zip`
 - (If you're on ubuntu, use apt-get install for these packages. If easy_install gives you trouble use pip install.)
 - Now download twitter_ebooks https://github.com/markhamilton/twitter_ebooks/tarball/master 
 - Untar this into your ebooks folder

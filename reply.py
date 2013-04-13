@@ -30,7 +30,7 @@ if config.replies:
 		print "Printing test replies (dry-run)"
 	
 	last_tweet = long(state['last_reply'])
-	replies = api.GetReplies(since_id=last_tweet)
+	replies = api.GetMentions(since_id=last_tweet)
 	
 	for reply in replies:
 		if check_names(reply):
