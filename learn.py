@@ -38,7 +38,7 @@ for account in config.dump_accounts:
 
 	try:
 		timeline = api.GetUserTimeline(
-			screen_name=account, count=200, since_id=last_tweet,last_tweet
+			screen_name=account, count=200, since_id=last_tweet,
 			include_rts=config.skip_retweets,
 			exclude_replies=config.skip_replies,
 			trim_user=True
