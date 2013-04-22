@@ -13,11 +13,12 @@ lines = db_manager.get_tweets()
 #check tweet vs text files and reject if >70% the same as a tweet up in there or if it contains a blacklisted word
 #also reject any blank tweets (this condition can happen when filtering urls)
 def check_tweet(content):
-	for k in config.blacklist:
-		# makes the blacklist case insensitive
-		if k.lower() in content.lower():
-			print "[debug] Rejected (blacklist): " + content
-			return False
+	if config.blacklist != None and len( config.blacklist ) > 0:
+		for k in config.blacklist:
+			# makes the blacklist case insensitive
+			if k.lower() in content.lower():
+				print "[debug] Rejected (blacklist): " + content
+				return False
 	for line in lines:
 		if Levenshtein.ratio(re.sub(r'\W+', '', content.lower()), re.sub(r'\W+', '', line.lower())) >= 0.70:
 			print "[debug] Rejected (Levenshtein.ratio): " + content
