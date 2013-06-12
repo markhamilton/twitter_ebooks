@@ -20,9 +20,6 @@ brain_tweets = ['']
 #by the way, this is tracked on a per tweet basis now COOL WOW NICE DUDE
 log_time = 72
 
-# Skip replies when learning?
-skip_replies = True
-
 # Reply to tweets?
 replies = True
 

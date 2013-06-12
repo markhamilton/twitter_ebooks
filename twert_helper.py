@@ -47,7 +47,7 @@ def smart_truncate(content, length=140):
 	else:
 		return content[:length].rsplit(' ', 1)[0]
 
-def create_tweet(catalyst=''):
+def create_tweet(catalyst='', save_to_history=True):
 	b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
 	# get a reply from brain, encode as UTF-8
@@ -55,16 +55,18 @@ def create_tweet(catalyst=''):
 
 	while True:
 		tweet = b.reply(catalyst)
-		if(config.filter_url):
+		if config.filter_url:
 			tweet = remove_url(tweet)
 		tweet = smart_truncate(tweet)
 		#make sure we're not tweeting something close to something else in the txt files
 		#or we can just give up after 300 tries
-		if check_tweet(tweet) or i >= 300:
-			break
-		i += 1
-		
-	#put the tweet in the db
-	db_manager.insert_tweet(tweet)
+		if check_tweet(tweet):
+			# tweet matches criteria
+			if save_to_history==True:
+				db_manager.insert_tweet(tweet)
+			return tweet
+		elif i >= 300:
+			return unicode('')
 
-	return tweet
+		i += 1
+
