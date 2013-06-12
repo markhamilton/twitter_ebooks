@@ -5,7 +5,7 @@ This is an update to https://github.com/clonepa/twitter_ebooks, which is an upda
 3 non-standard twitter dependencies:
 - Levenshtein - http://pypi.python.org/pypi/python-Levenshtein/
 - Cobe - https://github.com/pteichman/cobe
-- Python-Twitter - https://github.com/postcasio/python-twitter/tarball/master
+- Python-Twitter - git://github.com/bear/python-twitter.git
 
 (There are two common twitter api modules, make sure you grab the right one if you're using a package manager.)
 
