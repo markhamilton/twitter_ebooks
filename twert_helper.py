@@ -4,6 +4,10 @@ import re
 import db_manager
 import config
 from cobe.brain import Brain
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 #load blacklist
 blacklist = config.blacklist
@@ -20,7 +24,7 @@ def check_tweet(content):
 				print "[debug] Rejected (blacklist): " + content
 				return False
 	for line in lines:
-		if Levenshtein.ratio(re.sub(r'\W+', '', content.lower()), re.sub(r'\W+', '', line.lower())) >= 0.70:
+		if Levenshtein.ratio(re.sub(r'\W+', '', content.lower()), re.sub(r'\W+', '', unicode(line.lower()))) >= 0.80:
 			print "[debug] Rejected (Levenshtein.ratio): " + content
 			return False
 		if content.strip(' \t\n\r').lower() in line.strip(' \t\n\r').lower():
@@ -49,7 +53,7 @@ def create_tweet(catalyst=''):
 	i = 0
 
 	while True:
-		tweet = b.reply(catalyst).encode('utf-8', 'replace')
+		tweet = b.reply(catalyst)
 		if(config.filter_url):
 			tweet = remove_url(tweet)
 		tweet = smart_truncate(tweet)

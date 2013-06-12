@@ -1,4 +1,10 @@
+#!/usr/bin/python
+
 import os, glob, csv
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 tweets = []
 ignored = 0

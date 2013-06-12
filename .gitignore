@@ -1,0 +1,11 @@
+.state
+
+config.py
+
+*.pyc
+
+*.brain
+*.brain-journal
+*.db
+*.txt
+

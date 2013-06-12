@@ -1,5 +1,11 @@
+#!/usr/bin/python
+
 import argparse
 import re
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 parser = argparse.ArgumentParser(description="Prep a file directly from greptweet.com (but doesn't import it into the brain). This will replace the contents of the existing file.")
 parser.add_argument('file', metavar='file', type=str, help='A file filled with raw tweet data')

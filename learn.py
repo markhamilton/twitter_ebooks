@@ -1,8 +1,14 @@
+#!/usr/bin/python
+
 import twitter, os
 import config
 from simplejson import loads, dumps
 from cobe.brain import Brain
 import db_manager
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
@@ -49,7 +55,7 @@ for account in config.dump_accounts:
 	for tweet in timeline:
 		b.learn(tweet.text)
 		#add it to the db
-		db_manager.insert_tweet(tweet.text.encode('utf-8', 'replace'), False)
+		db_manager.insert_tweet(tweet.text, False)
 		last_tweet = max(tweet.id, last_tweet)
 		tweets += 1
 

@@ -1,7 +1,13 @@
+#!/usr/bin/python
+
 import twitter, argparse, os
 import twert_helper
 import config
 from simplejson import loads, dumps
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 parser = argparse.ArgumentParser(description="Checks for recent unanswered @mentions and replies to them individually")
 parser.add_argument('-o', '--stdout', action='store_true', help="Shows replies without actually sending to twitter")
@@ -36,8 +42,8 @@ if config.replies:
 		if check_names(reply):
 			continue
 		# try:
-		reply_tweet = twert_helper.create_tweet(reply.text.encode('utf-8', 'replace'))
-		reply_tweet = twert_helper.smart_truncate('@%s %s' % (reply.user.screen_name.encode('utf-8', 'replace'), reply_tweet))
+		reply_tweet = twert_helper.create_tweet(reply.text)
+		reply_tweet = twert_helper.smart_truncate('@%s %s' % (reply.user.screen_name, reply_tweet))
 		if not args.stdout:
 			api.PostUpdate(reply_tweet, in_reply_to_status_id=reply.id)
 		else: 
