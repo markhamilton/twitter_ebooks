@@ -18,7 +18,7 @@ if args.tweet:
 	# tweet arbitrary text from console
 	api.PostUpdate(args.tweet)
 else:
-	tweet = twert_helper.create_tweet()
+	tweet = twert_helper.create_tweet('', not args.stdout)
 	if tweet == unicode(''):
 		# failure: probably couldn't generate a tweet within the alloted tries
 		print "Could not generate a unique tweet this time"

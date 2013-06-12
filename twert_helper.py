@@ -64,8 +64,10 @@ def create_tweet(catalyst='', save_to_history=True):
 			# tweet matches criteria
 			if save_to_history==True:
 				db_manager.insert_tweet(tweet)
+				print "[debug] Saved tweet to twert history database"
 			return tweet
 		elif i >= 300:
+			print "[debug] Failure to create unique tweet. >300 tries"
 			return unicode('')
 
 		i += 1
