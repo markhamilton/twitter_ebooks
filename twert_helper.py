@@ -24,8 +24,9 @@ def check_tweet(content):
 				print "[debug] Rejected (blacklist): " + content
 				return False
 	for line in lines:
-		if Levenshtein.ratio(re.sub(r'\W+', '', content.lower()), re.sub(r'\W+', '', unicode(line.lower()))) >= 0.80:
-			print "[debug] Rejected (Levenshtein.ratio): " + content
+		lratio = Levenshtein.ratio(re.sub(r'\W+', '', content.lower()), re.sub(r'\W+', '', unicode(line.lower())))
+		if lratio >= 0.90:
+			print "[debug] Rejected (Levenshtein.ratio=" + str(lratio) + "): " + content
 			return False
 		if content.strip(' \t\n\r').lower() in line.strip(' \t\n\r').lower():
 			print "[debug] Rejected (Identical): " + content
@@ -58,8 +59,8 @@ def create_tweet(catalyst=''):
 			tweet = remove_url(tweet)
 		tweet = smart_truncate(tweet)
 		#make sure we're not tweeting something close to something else in the txt files
-		#or we can just give up after 100 tries
-		if check_tweet(tweet) or i >= 100:
+		#or we can just give up after 300 tries
+		if check_tweet(tweet) or i >= 300:
 			break
 		i += 1
 		

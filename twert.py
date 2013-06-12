@@ -19,7 +19,5 @@ if args.tweet:
 	api.PostUpdate(args.tweet)
 else:
 	tweet = twert_helper.create_tweet()
-	if args.stdout:
-		print tweet
-	else:
-		status = api.PostUpdate(tweet)
+	print tweet
+	status = api.PostUpdate(tweet)

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import os, glob, json, codecs
 
 tweets = []
