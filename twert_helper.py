@@ -54,7 +54,7 @@ def create_tweet(catalyst='', save_to_history=True):
 	i = 0
 
 	while True:
-		tweet = b.reply(catalyst)
+		tweet = b.reply(catalyst).replace("&gt;", ">").replace("&lt;", "<").replace("&amp;", "&")
 		if config.filter_url:
 			tweet = remove_url(tweet)
 		tweet = smart_truncate(tweet)
