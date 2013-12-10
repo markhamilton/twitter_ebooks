@@ -27,8 +27,10 @@ replies = True
 #example: ['thom_ebooks', 'clonepa_']
 screen_name = ['']
 
-# Filter urls?
+# Filters
 filter_url = False
+filter_handle = False
+filter_hashtag = False
 
 #blacklist of words or phrases to reject tweets based on
 #be sure to include spaces!! for example "is" will give a false positive and match "this", but " is " (note the spaces) won't.

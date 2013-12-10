@@ -36,7 +36,12 @@ def check_tweet(content):
 		return False
 	return True
 
-# filter out url from tweet and then remove whitespace around the edges
+def remove_handle(content):
+	return ( re.sub(r'@[^\s]+\s?', '', content) ).strip(' \t\n\r')
+
+def remove_hashtag(content):
+	return ( re.sub(r'#[^\s]+\s?', '', content) ).strip(' \t\n\r')
+
 def remove_url(content):
 	return ( re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', content) ).strip(' \t\n\r')
 
@@ -57,6 +62,10 @@ def create_tweet(catalyst='', save_to_history=True):
 		tweet = b.reply(catalyst).replace("&gt;", ">").replace("&lt;", "<").replace("&amp;", "&")
 		if config.filter_url:
 			tweet = remove_url(tweet)
+		if config.filter_hashtag:
+			tweet = remove_hashtag(tweet)
+		if(config.filter_handle):
+			tweet = remove_handle(tweet)
 		tweet = smart_truncate(tweet)
 		#make sure we're not tweeting something close to something else in the txt files
 		#or we can just give up after 300 tries
