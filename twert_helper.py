@@ -25,7 +25,7 @@ def check_tweet(content):
 				return False
 	for line in lines:
 		lratio = Levenshtein.ratio(re.sub(r'\W+', '', content.lower()), re.sub(r'\W+', '', unicode(line.lower())))
-		if lratio >= 0.90:
+		if lratio >= config.levenshtein_ratio:
 			print "[debug] Rejected (Levenshtein.ratio=" + str(lratio) + "): " + content
 			return False
 		if content.strip(' \t\n\r').lower() in line.strip(' \t\n\r').lower():

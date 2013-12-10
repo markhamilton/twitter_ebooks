@@ -20,6 +20,11 @@ brain_tweets = ['']
 #by the way, this is tracked on a per tweet basis now COOL WOW NICE DUDE
 log_time = 72
 
+#What Levenshtein ratio should we use?
+#Higher numbers allow tweets that are more similar to the originals
+#Range is from 0 to 1
+levenshtein_ratio = 0.80
+
 # Reply to tweets?
 replies = True
 
