@@ -20,7 +20,7 @@ for filename in glob.glob('*.csv'):
         tweetreader = csv.reader(csvfile)
         for tweet in tweetreader:
             # the actual text is in the 8th position of the csv
-            text = tweet[7]
+            text = tweet[5]
 
             # add it to the tweetlist if it isn't a reply or retweet
             if not text.startswith('@') and not text.startswith('RT'):
