@@ -9,3 +9,4 @@ config.py
 *.db
 *.txt
 
+csv/
