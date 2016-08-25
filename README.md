@@ -1,4 +1,6 @@
-#twitter_ebooks
+#twitter_ebooks [v2]
+
+A python-based twitter bot that runs as a daemon. That's right--no more setting up cron jobs!
 
 This is an update to https://github.com/clonepa/twitter_ebooks, which is an update to postcasio's version, which is an update to thom's version.
 
