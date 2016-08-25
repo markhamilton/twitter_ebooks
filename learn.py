@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import twitter, os
 import config
 from simplejson import loads, dumps

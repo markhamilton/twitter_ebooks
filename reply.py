@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import twitter, argparse, os
 import twert_helper
 import config
@@ -24,7 +22,7 @@ if 'last_reply' not in state:
 api = twitter.Api(**config.api)
 
 def check_names(rp):
-	for name in config.screen_name:		
+	for name in config.screen_name:
 		if rp.user.screen_name.lower() == name.lower():
 			return True
 	return False

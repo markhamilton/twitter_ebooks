@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import twitter, argparse, sys, os
 import config
 import twert_helper

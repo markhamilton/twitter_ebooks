@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import Levenshtein
 import os
 import re
