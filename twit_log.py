@@ -14,6 +14,7 @@ prev_date = None
 date_format = '%Y-%m-%d'
 
 def writeline(text, debug=False, error=False ):
+	# TODO: don't output to console in bg, that's rude as hell
 	global prev_date
 	cur_date = strftime(date_format)
 
