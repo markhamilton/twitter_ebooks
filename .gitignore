@@ -4,6 +4,8 @@ config.py
 
 *.pyc
 
+*.swp
+
 *.brain
 *.brain-journal
 *.db
