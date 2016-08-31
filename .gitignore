@@ -12,3 +12,4 @@ config.py
 *.txt
 
 csv/
+__pycache__/
