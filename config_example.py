@@ -1,9 +1,9 @@
 # Get these from dev.twitter.com
 api = {
-	'consumer_key': '',
-	'consumer_secret': '',
-	'access_token_key': '',
-	'access_token_secret': ''
+    'consumer_key': '',
+    'consumer_secret': '',
+    'access_token_key': '',
+    'access_token_secret': ''
 }
 
 # List of accounts that learn.py should grab tweets from
@@ -33,11 +33,11 @@ replies = True
 screen_name = ['']
 
 # Filters
-filter_url = False
-filter_handle = False
-filter_hashtag = False
+filter_url = True
+filter_handle = True
+filter_hashtag = True
 
 #blacklist of words or phrases to reject tweets based on
 #be sure to include spaces!! for example "is" will give a false positive and match "this", but " is " (note the spaces) won't.
 #example: [' badword ', ' butt ']
-blacklist = ['']
+blacklist = [ ]
