@@ -2,8 +2,6 @@
 
 A python-based twitter bot that runs as a daemon. That's right--no more setting up cron jobs!
 
-This is an update to https://github.com/clonepa/twitter_ebooks, which is an update to postcasio's version, which is an update to thom's version.
-
 3 non-standard twitter dependencies:
 - Levenshtein - http://pypi.python.org/pypi/python-Levenshtein/
 - Cobe - https://github.com/pteichman/cobe
@@ -92,3 +90,9 @@ These directives will make the bot tweet once an hour, reply to tweets twice an 
 (I removed the instructions on how to replace crontab intentionally so you don't end up deleting your existing cron jobs. Look this up if you're not sure how to do it please.)
 
 > "Your bot is ready! Go retweet it or something, NERD"
+
+## twitter_ebooks [v2] lineage
+
+This has evolved greatly from its origins: This is an update to clonepa, which is an update to postcasio's version, which is an update to thom's version.
+
+Mark's initial fork centralized the tweeting code and made it less monolithic. Version 2 removed the need to schedule jobs and turned it into a daemon.

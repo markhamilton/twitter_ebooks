@@ -10,6 +10,7 @@ def do_main_loop():
 		twit_log.writeline("Checking jobs...")
 
 		# adding example job!
+		# TODO: only write like this to stdout when not in daemon mode
 		for y in range(30):
 			for x in range(10):
 				sys.stdout.write(random.choice(string.ascii_letters))

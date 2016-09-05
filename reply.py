@@ -4,9 +4,6 @@ import config
 from simplejson import loads, dumps
 import sys
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 parser = argparse.ArgumentParser(description="Checks for recent unanswered @mentions and replies to them individually")
 parser.add_argument('-o', '--stdout', action='store_true', help="Shows replies without actually sending to twitter")
 args = parser.parse_args()
