@@ -32,7 +32,7 @@ def check_tweet(content):
 		if content.strip(' \t\n\r').lower() in line.strip(' \t\n\r').lower():
 			print "[debug] Rejected (Identical): " + content
 			return False
-	if len(content) == 0:
+	if len(strim(content)) == 0:
 		print "[debug] Rejected (empty)"
 		return False
 	return True

@@ -23,6 +23,7 @@ if 'last_reply' not in state:
 
 api = twitter.Api(**config.api)
 
+# make sure we're not replying to ourselves
 def check_names(rp):
 	for name in config.screen_name:		
 		if rp.user.screen_name.lower() == name.lower():
@@ -41,16 +42,24 @@ if config.replies:
 	for reply in replies:
 		if check_names(reply):
 			continue
-		# try:
-		reply_tweet = twert_helper.create_tweet(reply.text)
-		reply_tweet = twert_helper.smart_truncate('@%s %s' % (reply.user.screen_name, reply_tweet))
-		if not args.stdout:
-			api.PostUpdate(reply_tweet, in_reply_to_status_id=reply.id)
-		else: 
-			print(reply_tweet)
-		# except:
-		# 	print 'Error posting reply.'
 
+		reply_tweet = twert_helper.create_tweet(reply.text)
+		if len(reply_tweet) == 0:
+			# sometimes it can't be done with the catalyst given
+			# so create something novel, instead
+			reply_tweet = twert_helper.create_tweet()
+
+		# make sure that we don't have a blank tweet
+		# otherwise we'll send a blank reply
+		if len(reply_tweet) > 0:
+			reply_tweet = twert_helper.smart_truncate('@%s %s' % (reply.user.screen_name, reply_tweet))
+			if not args.stdout:
+				api.PostUpdate(reply_tweet, in_reply_to_status_id=reply.id)
+			else: 
+				print(reply_tweet)
+
+		# mark it as last tweet either way
+		# (in rare circumstances the bot won't reply)
 		last_tweet = max(reply.id, last_tweet)
 
 	if not args.stdout:
